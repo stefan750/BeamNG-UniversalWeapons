@@ -1,0 +1,80 @@
+{
+  "_50cal_barrel": {
+    "name": "_50cal_barrel",
+    "mapTo": "50cal_barrel",
+    "class": "Material",
+    "persistentId": "1452a9bd-fefd-412d-a456-71e46c52e46c",
+    "Stages": [
+      {
+        "diffuseColor": [
+          0.800000012,
+          0.800000012,
+          0.800000012,
+          1
+        ]
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      }
+    ],
+    "translucentBlendOp": "None"
+  },
+  "_50cal_main": {
+    "name": "_50cal_main",
+    "mapTo": "50cal_main",
+    "class": "Material",
+    "persistentId": "1f966c0d-76ff-4430-a895-89d617130f5f",
+    "Stages": [
+      {
+        "diffuseColor": [
+          0.800000012,
+          0.800000012,
+          0.800000012,
+          1
+        ]
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      }
+    ],
+    "translucentBlendOp": "None"
+  },
+  "_50cal_topcover": {
+    "name": "_50cal_topcover",
+    "mapTo": "50cal_topcover",
+    "class": "Material",
+    "persistentId": "11d0dd89-bfd1-40ba-b2ea-ec8109f70147",
+    "Stages": [
+      {
+        "diffuseColor": [
+          0.800000012,
+          0.800000012,
+          0.800000012,
+          1
+        ]
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      }
+    ],
+    "translucentBlendOp": "None"
+  }
+}

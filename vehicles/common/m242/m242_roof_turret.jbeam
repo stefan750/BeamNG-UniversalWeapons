@@ -1,0 +1,183 @@
+{
+"m242_roof_turret": {
+	"information":{
+		"authors":"stefan750",
+		"name":"20mm Autocannon",
+	}
+    "slotType" : "weapon_roof_turret_big",
+	"controller": [
+		["fileName"],
+		["universalweapons", {"name":"weapon_roof"}],
+	],
+	"weapon_roof": {
+		"barrelNodeFront":"w0"
+		"barrelNodeRear":"w1"
+		"ammoTag":"ammo_roof"
+		"fireRate":200
+		"muzzleVel":250
+		"recoil":50
+		"accuracy":1
+		"explosionRadius":1
+		"tracerWidth":0.03
+		"singleShotSound":"file:vehicles>common>sounds>weapons>autocannon-single.ogg"
+		"impactSound":"file:vehicles>common>sounds>weapons>explosion-small.ogg"
+	},
+	"turretController":{
+		"elevationServo":"elevationServo"
+        "barrelNodeFront":"w0"
+		"barrelNodeRear":"w1"
+        "minElevation":-0.6
+        "maxElevation":0.4
+	},
+    "rotators":
+	[
+		["name","[group]:","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        {"radius":1},
+		{"speedo":false}
+        ["gun", ["m242"], "roofturret200r", "roofturret200l", 9999, "roofturret3", 1, {"torqueCoupling:":"roofturret3", "torqueArm:":"roofturret200l", "torqueArm2:":"roofturret200r"}],
+	],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["electricServo", "elevationServo", "dummy", 0, {"connectedRotator":"gun", "gearRatio": 1, "rotationMode":"shortest"}],
+    ],
+    "elevationServo": {
+        "maxRPM":10,
+        "stallTorque":100000,
+        "friction":200,
+        "dynamicFriction":20,
+        "angularSpring":2
+    },
+	"flexbodies": [
+		["mesh", "[group]:", "nonFlexMaterials"],
+		["m242", ["m242"], [], {"pos":{"x":0.0, "y":0.0, "z":0.3}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1.0,"y":1.0,"z":1.0}}],
+	],
+	"nodes": [
+		["id", "posX", "posY", "posZ"],
+		{"selfCollision":false}
+		{"collision":true}
+		{"frictionCoef":0.7},
+		{"nodeMaterial":"|NM_METAL"},
+		{"nodeWeight":5},
+		{"group":"m242"},
+		["w0", -0.0005, -2.0832, 0.4749],
+		["w1", -0.0005, 0.0223, 0.4826],
+        ["w2", 0.2201, 0.4177, 0.2927],
+        ["w3", 0.2201, -0.41, 0.2927],
+        ["w4", -0.2251, -0.41, 0.2927],
+        ["w5", -0.2251, 0.4177, 0.2927],
+        ["w6", 0.2201, 0.4177, 0.6526],
+        ["w7", 0.2201, -0.41, 0.6526],
+        ["w8", -0.2251, -0.41, 0.6526],
+        ["w9", -0.2251, 0.4177, 0.6526],
+		{"selfCollision":false}
+		{"frictionCoef":50},
+		{"nodeWeight":10},
+		{"tag":"ammo_roof"},
+		{"group":""},
+		["al0", 0, 0, -1],
+		["al1", 0, 0, -1],
+		["al2", 0, 0, -1],
+		["al3", 0, 0, -1],
+		["al4", 0, 0, -1],
+		["al5", 0, 0, -1],
+		["al6", 0, 0, -1],
+		["al7", 0, 0, -1],
+		["al8", 0, 0, -1],
+		["al9", 0, 0, -1],
+		["al10", 0, 0, -1],
+		["al11", 0, 0, -1],
+		["al12", 0, 0, -1],
+		["al13", 0, 0, -1],
+		["al14", 0, 0, -1],
+		["al15", 0, 0, -1],
+		["al16", 0, 0, -1],
+		["al17", 0, 0, -1],
+		["al18", 0, 0, -1],
+		["al19", 0, 0, -1],
+		["al20", 0, 0, -1],
+		["al21", 0, 0, -1],
+		["al22", 0, 0, -1],
+		["al23", 0, 0, -1],
+		["al24", 0, 0, -1],
+		{"group":""},
+		{"tag":""},
+	],
+	
+	"beams": [
+		["id1:", "id2:"],
+		{"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+		{"beamSpring":1001000,"beamDamp":1000},
+		{"beamDeform":500000,"beamStrength":"FLT_MAX"},
+		["w3","w4"],
+		["w2","w5"],
+		["w3","w2"],
+		["w3","w1"],
+		["w4","w1"],
+		["w0","w1"],
+		["w4","w5"],
+		["w3","w5"],
+        ["w1","w5"],
+        ["w1","w2"],
+        ["w4","w2"],
+        ["w6","w2"],
+        ["w3","w7"],
+        ["w8","w7"],
+        ["w6","w9"],
+        ["w6","w7"],
+        ["w9","w7"],
+        ["w8","w9"],
+        ["w8","w6"],
+        ["w8","w4"],
+        ["w5","w9"],
+        ["w2","w9"],
+        ["w4","w9"],
+        ["w2","w7"],
+        ["w1","w9"],
+        ["w1","w8"],
+        ["w1","w7"],
+        ["w0","w3"],
+        ["w0","w7"],
+        ["w0","w8"],
+        ["w0","w4"],
+        ["w3","w6"],
+        ["w5","w6"],
+        ["w5","w8"],
+        
+		["roofturret200l","w2"],
+        ["roofturret200l","w3"],
+        ["roofturret200l","w6"],
+        ["roofturret200l","w7"],
+        ["roofturret200l","w4"],
+        ["roofturret200l","w5"],
+        ["roofturret200l","w8"],
+        ["roofturret200l","w9"],
+
+        ["roofturret200r","w2"],
+        ["roofturret200r","w3"],
+        ["roofturret200r","w6"],
+        ["roofturret200r","w7"],
+        ["roofturret200r","w4"],
+        ["roofturret200r","w5"],
+        ["roofturret200r","w8"],
+        ["roofturret200r","w9"],
+	],
+	"triangles": [
+		["id1:", "id2:", "id3:"],
+		{"dragCoef":5},
+        ["w4","w5","w3"],
+        ["w5","w2","w3"],
+        ["w5","w6","w2"],
+        ["w6","w5","w9"],
+        ["w5","w4","w9"],
+        ["w8","w9","w4"],
+        ["w3","w2","w6"],
+        ["w3","w6","w7"],
+        ["w7","w6","w8"],
+        ["w9","w8","w6"],
+        ["w7","w8","w0"],
+        ["w0","w3","w7"],
+        ["w4","w0","w8"],
+        ["w3","w0","w4"],
+	],
+}
+}

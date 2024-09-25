@@ -1,0 +1,6 @@
+// Global InputActions for FlightMode mod
+{
+    "uw_fire"     :{"cat":"vehicle", "order":  1, "ctx": "vlua", "onChange":"electrics.values.fireweapons = VALUE", "title": "Fire Weapons", "desc": "Fires all weapons on the vehicle" }
+}
+    
+    

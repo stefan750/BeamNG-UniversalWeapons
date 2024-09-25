@@ -1,0 +1,59 @@
+{
+  "m2machinegun_barrel": {
+    "name": "m2machinegun_barrel",
+    "mapTo": "m2machinegun_barrel",
+    "class": "Material",
+    "persistentId": "",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/50cal/50cal_barrel_ao.png",
+        "baseColorMap": "/vehicles/common/50cal/50cal_barrel_diff.png",
+        "metallicMap": "/vehicles/common/50cal/50cal_barrel_met.png",
+        "normalMap": "/vehicles/common/50cal/50cal_barrel_norm.png",
+        "roughnessMap": "/vehicles/common/50cal/50cal_barrel_ruff.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  },
+  "m2machinegun_main": {
+    "name": "m2machinegun_main",
+    "mapTo": "m2machinegun_main",
+    "class": "Material",
+    "persistentId": "",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/50cal/50cal_main_ao.png",
+        "baseColorMap": "/vehicles/common/50cal/50cal_main_diff.png",
+        "metallicMap": "/vehicles/common/50cal/50cal_main_met.png",
+        "normalMap": "/vehicles/common/50cal/50cal_main_norm.png",
+        "roughnessMap": "/vehicles/common/50cal/50cal_main_ruff.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  },
+  "m2machinegun_topcover": {
+    "name": "m2machinegun_topcover",
+    "mapTo": "m2machinegun_topcover",
+    "class": "Material",
+    "persistentId": "",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/50cal/50cal_topcover_ao.png",
+        "baseColorMap": "/vehicles/common/50cal/50cal_topcover_diff.png",
+        "metallicMap": "/vehicles/common/50cal/50cal_topcover_met.png",
+        "normalMap": "/vehicles/common/50cal/50cal_topcover_norm.png",
+        "roughnessMap": "/vehicles/common/50cal/50cal_topcover_ruff.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  }
+}

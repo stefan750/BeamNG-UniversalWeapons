@@ -1,0 +1,17 @@
+{
+  "minigun": {
+    "name": "minigun",
+    "mapTo": "minigun",
+    "class": "Material",
+    "persistentId": "5f545b82-b677-4909-96c9-b185412726e1",
+    "Stages": [
+      {
+        "colorMap": "vehicles/common/minigun/W_Mounted_Gatling_DiffuseMap_PCout2.png",
+        "normalMap": "/vehicles/common/minigun/W_Mounted_Gatling_NormalMap_PCout.png"
+      },
+      {},
+      {},
+      {}
+    ]
+  }
+}

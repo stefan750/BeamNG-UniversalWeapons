@@ -1,0 +1,17 @@
+{
+  "m102_howitzer": {
+    "name": "m102_howitzer",
+    "mapTo": "m102_howitzer",
+    "class": "Material",
+    "persistentId": "457c6117-86c5-4636-aeff-c5c1722b2805",
+    "Stages": [
+      {
+        "colorMap": "/vehicles/common/howitzer/p3dm.ru_T_MCH_HOWITZER_DIF.tga",
+        "normalMap": "/vehicles/common/howitzer/p3dm.ru_T_MCH_HOWITZER_NRM.tga"
+      },
+      {},
+      {},
+      {}
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "m242": {
+    "name": "m242",
+    "mapTo": "m242",
+    "class": "Material",
+    "persistentId": "fc6e2d68-c641-4b78-a794-fe4697424dbd",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/m242/m242_AO.jpg",
+        "baseColorMap": "/vehicles/common/m242/m242_albedo.jpg",
+        "metallicMap": "/vehicles/common/m242/m242_metallic.jpg",
+        "normalMap": "/vehicles/common/m242/m242_normal.jpg",
+        "roughnessMap": "/vehicles/common/m242/m242_roughness.jpg"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  }
+}

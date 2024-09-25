@@ -1,0 +1,17 @@
+{
+  "minigun": {
+    "name": "minigun",
+    "mapTo": "minigun",
+    "class": "Material",
+    "persistentId": "bfc96f83-0480-48b0-afb3-33ef3569ece3",
+    "Stages": [
+      {
+        "colorMap": "W_Mounted_Gatling_DiffuseMap_PCout 2.tga.001"
+      },
+      {},
+      {},
+      {}
+    ],
+    "translucentBlendOp": "None"
+  }
+}
