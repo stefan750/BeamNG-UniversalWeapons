@@ -1,3 +1,5 @@
+-- Author: stefan750
+
 local M = {}
 M.type = "auxiliary"
 M.defaultOrder = 100
@@ -13,6 +15,8 @@ local fireInterval = 0.1
 local muzzleVel = 300
 local accuracy = 3
 local recoil = 0
+local bulletLifeTime = nil
+local disableGravity = false
 
 local thrust = 0
 local maxSpeed = 200
@@ -21,6 +25,7 @@ local impactAcceleration = 10000
 local minSpeed = 10
 local explosionRadius = 0
 local explosionForce = 50
+local selfDamage = true
 
 local projectileLength = 0
 local projectileWidth = 0.05
@@ -35,6 +40,8 @@ local fireElectric = "fireweapons"
 local barrelSpinElectric = "barrelspin"
 local barrelSpinSpeed = 1000
 local barrelSpinSlowdown = 1000
+
+local bulletElectric = nil
 
 local singleShotSound = nil
 local impactSound = nil
@@ -73,7 +80,7 @@ local function createExplosionAtPosition(position, radius, force, directionInver
         local radius1 = %f
         local radius2 = %f
         
-        local boundLen = vec3(obj:getInitialWidth() + radius2, obj:getInitialLength() + radius2, obj:getInitialHeight() + radius2):squaredLength()
+        local boundLen = vec3(obj:getInitialWidth(), obj:getInitialLength(), obj:getInitialHeight()):squaredLength() + radius2*radius2
 
         if localPosition:squaredLength() <= boundLen then
             local nodeCount = #v.data.nodes
@@ -94,7 +101,12 @@ local function createExplosionAtPosition(position, radius, force, directionInver
             end
         end
         ]], position.x, position.y, position.z, radius*0.5, radius, force, directionInversionCoef or 0.3)
-    BeamEngine:queueAllObjectLua(explosionString)
+    
+    if selfDamage then
+        BeamEngine:queueAllObjectLua(explosionString)
+    else
+        BeamEngine:queueAllObjectLuaExcept(explosionString, obj:getID())
+    end
 end
 
 local function createExplosionAtNode(centerNode, radius, force)
@@ -137,8 +149,16 @@ local function reset(jbeamData)
 
     barrelAV = 0
 
-    electrics.values[barrelSpinElectric] = 0
+    if barrelSpinElectric then
+        electrics.values[barrelSpinElectric] = 0
+    end
     electrics.values[fireElectric] = 0
+
+    if bulletElectric then
+        for _, n in pairs(ammoNodes) do
+            electrics.values[bulletElectric .. v.data.nodes[n].name] = 0
+        end
+    end
 end
 
 local function init(jbeamData)
@@ -146,6 +166,8 @@ local function init(jbeamData)
     muzzleVel = jbeamData.muzzleVel or muzzleVel
     accuracy = jbeamData.accuracy or accuracy
     recoil = jbeamData.recoil or recoil
+    bulletLifeTime = jbeamData.bulletLifeTime or bulletLifeTime
+    disableGravity = jbeamData.disableGravity or disableGravity
     
     thrust = jbeamData.thrust or thrust
     maxSpeed = jbeamData.maxSpeed or maxSpeed
@@ -154,7 +176,8 @@ local function init(jbeamData)
     explosionForce = jbeamData.explosionForce or explosionForce
     impactAcceleration = jbeamData.impactAcceleration or impactAcceleration
     minSpeed = jbeamData.minSpeed or minSpeed
-    
+    if jbeamData.selfDamage ~= nil then selfDamage = jbeamData.selfDamage end
+
     projectileLength = jbeamData.projectileLength or projectileLength
     projectileWidth = jbeamData.projectileWidth or projectileWidth
     projectileColor = jbeamData.projectileColor and color(jbeamData.projectileColor[1] or 0, jbeamData.projectileColor[2] or 0, jbeamData.projectileColor[3] or 0, jbeamData.projectileColor[4] or 255) or projectileColor
@@ -170,25 +193,27 @@ local function init(jbeamData)
     barrelSpinSpeed = jbeamData.barrelSpinSpeed or barrelSpinSpeed
     barrelSpinSlowdown = jbeamData.barrelSpinSlowdown or barrelSpinSlowdown
     
+    bulletElectric = jbeamData.bulletElectric or bulletElectric
+    
     singleShotSound = jbeamData.singleShotSound or singleShotSound
     impactSound = jbeamData.impactSound or impactSound
     impactSoundVolume = jbeamData.impactSoundVolume or impactSoundVolume
     
-    muzzleFlash = jbeamData.muzzleFlash or muzzleFlash
-    rocketEffect = jbeamData.rocketEffect or rocketEffect
+    if jbeamData.muzzleFlash ~= nil then muzzleFlash = jbeamData.muzzleFlash end
+    if jbeamData.rocketEffect ~= nil then rocketEffect = jbeamData.rocketEffect end
 
     ammoTag = jbeamData.ammoTag
     barrelNodeFront = jbeamData.barrelNodeFront
     barrelNodeRear = jbeamData.barrelNodeRear
 
     if not ammoTag then
-        log('E', "407guns.init", "ammoTag not defined!")
+        log('E', "universalweapons.init", "ammoTag not defined!")
     end
     if not barrelNodeFront then
-        log('E', "407guns.init", "barrelNodeFront not defined!")
+        log('E', "universalweapons.init", "barrelNodeFront not defined!")
     end
     if not barrelNodeRear then
-        log('E', "407guns.init", "barrelNodeRear not defined!")
+        log('E', "universalweapons.init", "barrelNodeRear not defined!")
     end
 
     ammoCount = 0
@@ -230,12 +255,15 @@ end
 local function update(dt)
 	
     -- Projectile update
-    for n, _ in pairs(activeNodes) do
-        if activeNodes[n] < 1 then
-            activeNodes[n] = activeNodes[n] + 1
+    for n, t in pairs(activeNodes) do
+        t = t + dt
+        activeNodes[n] = t
+        
+        -- Delay by 1 frame to let acceleration calculation catch up
+        if t <= dt then
             goto continue
         end
-        
+
         local currentVel = obj:getNodeVelocityVector(n)
         local lastVel = projectileVel[n]
         local acc = (currentVel-lastVel)/dt
@@ -243,7 +271,7 @@ local function update(dt)
         projectileVel[n] = currentVel
 
         -- If projectile hit something (acceleration high), or the speed is too low, explode or deactivate it
-        if acc:squaredLength() > impactAcceleration*impactAcceleration or currentVel:squaredLength() < minSpeed*minSpeed then
+        if acc:squaredLength() > impactAcceleration*impactAcceleration or currentVel:squaredLength() < minSpeed*minSpeed or (bulletLifeTime and t >= bulletLifeTime) then
             if impactSound then
                 sounds.playSoundOnceAtNode(impactSound, n, impactSoundVolume, 1, 0, 0)
             end
@@ -255,6 +283,10 @@ local function update(dt)
             activeNodes[n] = nil
             tracerNodes[n] = nil
             projectileVel[n] = nil
+
+            if bulletElectric then
+                electrics.values[bulletElectric .. v.data.nodes[n].name] = 0
+            end
         end
 
         -- Apply thrust force
@@ -264,6 +296,11 @@ local function update(dt)
             local force = clamp(maxSpeed - speed, -thrust*dt, thrust*dt)
 
             obj:applyForceVector(n, force*dir*obj:getNodeMass(n)*2000)
+        end
+
+        -- Cancel gravity
+        if disableGravity then
+            obj:applyForceVector(n, vec3(0, 0, -obj:getGravity()*obj:getNodeMass(n)))
         end
 
         ::continue::
@@ -322,6 +359,11 @@ local function update(dt)
                 tracerCounter = 0
             end
 
+            -- Set bullet electrics value
+            if bulletElectric then
+                electrics.values[bulletElectric .. v.data.nodes[n].name] = 1
+            end
+
             fireTimer = fireTimer - fireInterval
         end
 
@@ -340,7 +382,7 @@ local function update(dt)
         end
 
         -- Set barrel spin speed
-        barrelAV = barrelSpinSpeed
+        barrelAV = barrelSpinSpeed or 0
     
     -- Stop Firing
     else
@@ -365,7 +407,9 @@ local function update(dt)
     end
 
     -- Update barrel rotation
-    electrics.values[barrelSpinElectric] = (electrics.values[barrelSpinElectric] + barrelAV*dt) % 360
+    if barrelSpinElectric then
+        electrics.values[barrelSpinElectric] = (electrics.values[barrelSpinElectric] + barrelAV*dt) % 360
+    end
 end
 
 local function updateGFX(dt)
