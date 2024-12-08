@@ -67,7 +67,7 @@
     "paint_design":"scintilla_skin_darkowl",
     "pickup_engine_v8_internals":"pickup_engine_v8_internals_stage3",
     "pickup_oilpan_v8":"pickup_oilpan_v8_race",
-    "roofbars_load":"minigun_roof",
+    "roofbars_load":"weaponmount_roof",
     "scintilla_DSE":"scintilla_DSE",
     "scintilla_DSE_ABS":"scintilla_DSE_ABS",
     "scintilla_DSE_ESC":"",
@@ -194,6 +194,7 @@
     "soundscape_horn":"soundscape_horn_4",
     "tire_F_22x12":"tire_F_295_25_22_sport",
     "tire_R_22x14":"tire_R_335_25_22_sport",
+    "weapon_roof":"minigun_roof",
     "wheel_F_5":"wheel_civetta_darkowl_22x12_F",
     "wheel_R_5":"wheel_civetta_darkowl_22x14_R"
   },

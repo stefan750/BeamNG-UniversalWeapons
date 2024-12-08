@@ -124,10 +124,11 @@
     "pigeon_wheeldata_F_3w":"pigeon_wheeldata_F_3w",
     "pigeon_wheeldata_R":"pigeon_wheeldata_R",
     "pigeon_windshield":"pigeon_windshield",
-    "roofbars_load":"howitzer_roof",
+    "roofbars_load":"weaponmount_roof",
     "soundscape_horn":"soundscape_horn_102",
     "tire_F_10x4.5_3w":"tire_F_145_80_10_standard_3w",
     "tire_R_10x4.5":"tire_R_145_80_10_standard",
+    "weapon_roof":"howitzer_roof",
     "wheel_F_3_3w":"pigeon_wheel_01a_F_3w",
     "wheel_R_3":"pigeon_wheel_01a_R"
   },
