@@ -82,6 +82,7 @@ local function updateGFX(dt)
     if playerInfo.anyPlayerSeated then
         getCameraRotation()
         camDir = camRot * vec3(0, 0.93, 0.37)
+    -- AI aiming
     elseif ai.isDriving() then
         electrics.values.fireweapons = 0
         
@@ -93,10 +94,11 @@ local function updateGFX(dt)
             local shotLen = shootPos:distance(targetPos)
             local hitLen = obj:castRayStatic(shootPos, gunDir, shotLen)
             
+            -- Lead shots a bit
             targetPos = targetPos + target.vel*shotLen*0.003
             targetPos.z = targetPos.z + shotLen*shotLen*0.00005
 
-            print(hitLen.." "..shotLen)
+            --print(hitLen.." "..shotLen)
             if abs(hitLen - shotLen) < 10 then
                 electrics.values.fireweapons = 1
             end
@@ -131,15 +133,10 @@ local function updateGFX(dt)
     end
 end
 
-local function debugDraw(focusPos)
-    --obj.debugDrawProxy:drawSphere(0.5, focusPos, color(255, 0, 0, 255))
-end
-
 -- public interface
 M.reset      = reset
 M.init       = init
 M.updateGFX  = updateGFX
 M.setCameraRotation = setCameraRotation
-M.debugDraw = debugDraw
 
 return M
