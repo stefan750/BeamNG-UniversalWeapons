@@ -4,7 +4,7 @@
 		"authors":"stefan750",
 		"name":"20mm Autocannon",
 	}
-    "slotType" : "roofbars_load",
+    "slotType" : "weapon_roof",
 	"controller": [
 		["fileName"],
 		["universalweapons", {"name":"weapon_roof"}],

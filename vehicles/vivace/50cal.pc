@@ -66,7 +66,7 @@
     "n2o_system":"",
     "paint_design":"vivace_skin_camo",
     "race_seat_FL":"race_seat_FL",
-    "roofbars_load":"50cal_roof",
+    "roofbars_load":"weaponmount_roof",
     "skin_grp":"skin_grp_carbon",
     "skin_interior":"vivace_skin_interior",
     "skin_race_seat_FL":"skin_race_seat_FL_red",

@@ -1,8 +1,8 @@
 {
 "weapon_roof_turret": {
     "information":{
-        "authors":"stefan750, BeamNG",
-        "name":"Turret"
+        "authors":"stefan750",
+        "name":"Turret Weapon Mount"
     }
     "slotType" : "roofbars_load",
     "slots": [
@@ -346,7 +346,7 @@
 "weapon_roof_turret_big": {
     "information":{
         "authors":"stefan750, BeamNG",
-        "name":"Big Turret"
+        "name":"Big Turret Weapon Mount"
     }
     "slotType" : "roofbars_load",
     "slots": [

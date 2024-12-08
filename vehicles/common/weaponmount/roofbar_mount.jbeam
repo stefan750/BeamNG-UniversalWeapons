@@ -1,0 +1,13 @@
+{
+"weaponmount_roof": {
+    "information":{
+        "authors":"stefan750",
+        "name":"Weapon Mount"
+    }
+    "slotType" : "roofbars_load",
+    "slots": [
+        ["type", "default", "description"]
+        ["weapon_roof","50cal_roof", "Weapon", {"coreSlot":true}],
+    ],
+},
+}
