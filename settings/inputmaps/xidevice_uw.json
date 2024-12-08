@@ -1,0 +1,13 @@
+{
+  "bindings":[
+    {
+      "action":"uw_fire",
+      "control":"btn_lt"
+    }
+  ],
+  "devicetype":"xinput",
+  "guid":"xinput0",
+  "name":"XBox Controller 1",
+  "version":1,
+  "vidpid":"XIDevice"
+}
