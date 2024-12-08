@@ -24,7 +24,7 @@ local maxSpeed = 200
 local impactAcceleration = 10000
 local minSpeed = 10
 local explosionRadius = 0
-local explosionForce = 50
+local explosionForce = 30
 local selfDamage = true
 
 local projectileLength = 0
@@ -49,9 +49,11 @@ local impactSoundVolume = 5
 local muzzleFlash = true
 local rocketEffect = false
 
+local crosshair = true
+
+
 local barrelFrontId = nil
 local barrelRearId = nil
-
 
 local ammoCount = 0
 local ammoNodes = {}
@@ -86,13 +88,14 @@ local function createExplosionAtPosition(position, radius, force, directionInver
             local nodeCount = #v.data.nodes
             local abs = math.abs
             local random = math.random
+            local min = math.min
             for i = 0, nodeCount do
                 local node = v.data.nodes[i]
                 local nodePos = obj:getNodePosition(node.cid)
                 local distanceVec = nodePos - localPosition
                 local distance = abs(distanceVec:length())
                 if distance <= radius2 then
-                    local force = %f * 2000
+                    local force = %f * 2000 * min(node.nodeWeight, 10)
                     local dirInversion = fsign(random() - %f) --~30percent inverted
                     local forceAdjusted = force * clamp(-1 * (distance - radius1) / (radius2 - radius1) + 1, 0, 1)
                     obj:applyForceVector(node.cid, distanceVec:normalized() * dirInversion * forceAdjusted)
@@ -201,6 +204,8 @@ local function init(jbeamData)
     
     if jbeamData.muzzleFlash ~= nil then muzzleFlash = jbeamData.muzzleFlash end
     if jbeamData.rocketEffect ~= nil then rocketEffect = jbeamData.rocketEffect end
+
+    if jbeamData.crosshair ~= nil then crosshair = jbeamData.crosshair end
 
     ammoTag = jbeamData.ammoTag
     barrelNodeFront = jbeamData.barrelNodeFront
@@ -434,6 +439,20 @@ local function updateGFX(dt)
                 tracerNodes[n] = min(l + dt/tracerLength, 1)
             end
         end
+    end
+
+    -- Draw crosshair
+    if crosshair and playerInfo.anyPlayerSeated then
+        local barrelFrontPos = obj:getNodePosition(barrelFrontId)
+        local barrelRearPos = obj:getNodePosition(barrelRearId)
+        local gunDir = (barrelFrontPos - barrelRearPos):normalized()
+        local shootPos = (obj:getPosition() + barrelRearPos)
+
+        local hitLen = obj:castRayStatic(shootPos, gunDir, 100)*0.9
+        local hitPos = shootPos + gunDir * hitLen
+
+        obj.debugDrawProxy:drawSquarePrism(hitPos, hitPos + gunDir*0.001 * hitLen, vec3(0.002, 0.02, 0) * hitLen, vec3(0.002, 0.02, 0) * hitLen, color(0, 0, 128, 128))
+		obj.debugDrawProxy:drawSquarePrism(hitPos, hitPos + gunDir*0.001 * hitLen, vec3(0.02, 0.002, 0) * hitLen, vec3(0.02, 0.002, 0) * hitLen, color(0, 0, 128, 128))
     end
 end
 
